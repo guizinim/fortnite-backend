@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
-    "build": "npx tsc",
+    "prebuild": "npm install --save-dev typescript",
+    "build": "node ./node_modules/typescript/bin/tsc",
     "start": "node dist/index.js",
     "seed:admin": "ts-node src/scripts/seedAdmin.ts",
     "import:excel": "ts-node src/scripts/importProductsFromExcel.ts",
@@ -30,6 +31,6 @@
     "@types/node": "^24.5.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
