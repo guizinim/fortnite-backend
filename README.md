@@ -1,4 +1,4 @@
-# 🎮 Fortnite Backend
+﻿#  Fortnite Backend
 
 Backend API para gerenciamento de usuários, cosméticos e inventário do Fortnite, desenvolvido com Node.js, TypeScript e Firebase Firestore.
 
@@ -10,7 +10,6 @@ Backend API para gerenciamento de usuários, cosméticos e inventário do Fortni
 
 - **Node.js** (versão 16+)
 - **npm** ou **yarn** instalado
-- Arquivo de credenciais Firebase (`banco-users-firebase-adminsdk-fbsvc-7ef36fcf4c.json`) na raiz do projeto
 
 ### Passos para Instalação e Execução
 
@@ -35,7 +34,7 @@ Backend API para gerenciamento de usuários, cosméticos e inventário do Fortni
 
 O projeto usa o Firebase Admin SDK. Em vez de commitar o arquivo de credenciais JSON no repositório, armazene-o em uma variável de ambiente no arquivo `.env`.
 
-o .env foi enviado no Linkedin
+> Aviso: o arquivo `.env` com as credenciais do Firebase foi compartilhado em privado via LinkedIn. Não comite credenciais neste repositório. Para rodar localmente, configure `FIREBASE_SERVICE_ACCOUNT_JSON` ou `FIREBASE_SERVICE_ACCOUNT_PATH` no seu `.env`.
 
 ---
 
@@ -60,7 +59,7 @@ o .env foi enviado no Linkedin
 
 ### 3. **Padrão MVC com Separação de Camadas**
    ```
-   Routes → Controllers → Services → Firebase
+   Routes  Controllers  Services  Firebase
    ```
    - **Justificativa**: Separação de responsabilidades clara
    - **Benefício**: Código mais testável, manutenível e escalável
