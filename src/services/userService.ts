@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import admin from 'firebase-admin'
 import { db } from '../firebase'
 
@@ -98,7 +98,9 @@ export const userService = {
     }
 
     const saltRounds = 10
-    const passwordHash = await bcrypt.hash(password, saltRounds)
+    const passwordHash = await new Promise<string>((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, (err, h) => (err ? reject(err) : resolve(h)))
+    })
 
     const usersRef = db.collection('users')
     const q = await usersRef.where('email', '==', email).limit(1).get()
@@ -136,7 +138,9 @@ export const userService = {
     const data = doc.data() || {}
     const stored = data.senhaHash || data.password_hash
     if (!stored) throw new Error('Invalid credentials')
-    const ok = await bcrypt.compare(password, stored)
+    const ok = await new Promise<boolean>((resolve, reject) => {
+      bcrypt.compare(password, stored, (err, r) => (err ? reject(err) : resolve(r)))
+    })
     if (!ok) throw new Error('Invalid credentials')
     return buildUserWithCollections(doc.ref)
   },
@@ -188,7 +192,9 @@ export const userService = {
   },
 
   async resetPassword(id: string, newPassword: string) {
-    const hash = await bcrypt.hash(newPassword, 10)
+    const hash = await new Promise<string>((resolve, reject) => {
+      bcrypt.hash(newPassword, 10, (err, h) => (err ? reject(err) : resolve(h)))
+    })
     await db.collection('users').doc(id).update({ senhaHash: hash })
   },
 
@@ -197,9 +203,13 @@ export const userService = {
     if (!doc.exists) throw new Error('User not found')
     const data = doc.data() || {}
     const stored = data.senhaHash || data.password_hash || ''
-    const ok = await bcrypt.compare(currentPassword, stored)
+    const ok = await new Promise<boolean>((resolve, reject) => {
+      bcrypt.compare(currentPassword, stored, (err, r) => (err ? reject(err) : resolve(r)))
+    })
     if (!ok) throw new Error('Invalid current password')
-    const hash = await bcrypt.hash(newPassword, 10)
+    const hash = await new Promise<string>((resolve, reject) => {
+      bcrypt.hash(newPassword, 10, (err, h) => (err ? reject(err) : resolve(h)))
+    })
     await db.collection('users').doc(id).update({ senhaHash: hash })
   },
 
