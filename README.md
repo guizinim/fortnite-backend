@@ -33,8 +33,9 @@ Backend API para gerenciamento de usuários, cosméticos e inventário do Fortni
 
 ### Configuração do Firebase
 
-criar um arquivo .env e adicionar:
-FIREBASE_SERVICE_ACCOUNT_PATH = ".\banco-users-firebase-adminsdk-fbsvc-7ef36fcf4c.json"
+O projeto usa o Firebase Admin SDK. Em vez de commitar o arquivo de credenciais JSON no repositório, armazene-o em uma variável de ambiente no arquivo `.env`.
+
+o .env foi enviado no Linkedin
 
 ---
 
