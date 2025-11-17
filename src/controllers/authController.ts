@@ -21,12 +21,16 @@ export const authController = {
     try {
       const { email, password } = req.body || {}
       if (!email || !password) {
+        console.warn('Login falhou: email ou password vazio', { email: !!email, password: !!password })
         return res.status(400).json({ error: 'email e password são obrigatórios' })
       }
+      console.log('Login attempt for:', email)
       const user = await userService.authenticate(email, password)
+      console.log('Login bem-sucedido para:', email)
       res.json(user)
     } catch (e: any) {
       const message = e?.message || 'Erro ao autenticar'
+      console.error('Login error:', { email: req.body?.email, message, stack: e?.stack })
       res.status(message === 'Invalid credentials' ? 401 : 500).json({ error: message })
     }
   }
